@@ -3,7 +3,7 @@
     <Title>Robots.txt middleware for ASP.Net Core</Title>
     <Description>Robots.txt middleware with fluent interface.</Description>
     <VersionPrefix>1.1.0</VersionPrefix>
-    <TargetFrameworks>netcoreapp3.0;netstandard2.0;netstandard1.3</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;netstandard2.0;netstandard1.6</TargetFrameworks>
     <AssemblyName>RobotsTxtCore</AssemblyName>
     <Authors>Karl-Johan Sjögren</Authors>
     <PackageProjectUrl>https://github.com/karl-sjogren/robots-txt-middleware</PackageProjectUrl>
@@ -20,15 +20,15 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.0' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
     <FrameworkReference Include="Microsoft.AspNetCore.App"/>
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="1.1.2" />
   </ItemGroup>
 </Project>

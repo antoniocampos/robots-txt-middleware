@@ -1,17 +1,19 @@
 using System;
-using System.Diagnostics;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Xunit;
 
-namespace RobotsTxt.Tests {
-    public class MiddlewareTests {
+namespace RobotsTxt.Tests
+{
+    public class MiddlewareTests
+    {
         [Fact]
-        public async Task RobotsTxtShouldRenderOnCorrectPath() {
+        public async Task RobotsTxtShouldRenderOnCorrectPath()
+        {
             var server = new TestServer(new WebHostBuilder().UseStartup<Startup>());
             var client = server.CreateClient();
 
@@ -39,7 +41,8 @@ namespace RobotsTxt.Tests {
         }
 
         [Fact]
-        public async Task RobotsTxtShouldRenderAllowAllCorrectly() {
+        public async Task RobotsTxtShouldRenderAllowAllCorrectly()
+        {
             var server = new TestServer(new WebHostBuilder().UseStartup<StartupAllowAll>());
             var client = server.CreateClient();
 
@@ -59,7 +62,8 @@ namespace RobotsTxt.Tests {
         }
 
         [Fact]
-        public async Task RobotsTxtShouldRenderDenyAllCorrectly() {
+        public async Task RobotsTxtShouldRenderDenyAllCorrectly()
+        {
             var server = new TestServer(new WebHostBuilder().UseStartup<StartupDenyAll>());
             var client = server.CreateClient();
 
@@ -79,7 +83,8 @@ namespace RobotsTxt.Tests {
         }
 
         [Fact]
-        public async Task RobotsTxtShouldRenderACommentIfEmpty() {
+        public async Task RobotsTxtShouldRenderACommentIfEmpty()
+        {
             var server = new TestServer(new WebHostBuilder().UseStartup<StartupNoConfig>());
             var client = server.CreateClient();
 
@@ -93,27 +98,30 @@ namespace RobotsTxt.Tests {
         }
 
         [Fact]
-        public async Task RobotsTxtShouldFallThroughOnInvalidPath() {
+        public async Task RobotsTxtShouldFallThroughOnInvalidPath()
+        {
             var server = new TestServer(new WebHostBuilder().UseStartup<Startup>());
             var client = server.CreateClient();
 
             var response = await client.GetAsync("/not-robots.txt");
-            
+
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
     }
 
-    public class Startup {
-        public void Configure(IApplicationBuilder app) {
-            app.UseRobotsTxt(builder => 
+    public class Startup
+    {
+        public void Configure(IApplicationBuilder app)
+        {
+            app.UseRobotsTxt(builder =>
                 builder
-                    .AddSection(section => 
+                    .AddSection(section =>
                         section
                             .AddComment("Allow Googlebot")
                             .AddUserAgent("Googlebot")
                             .Allow("/")
                         )
-                    .AddSection(section => 
+                    .AddSection(section =>
                         section
                             .AddComment("Disallow the rest")
                             .AddUserAgent("*")
@@ -125,20 +133,26 @@ namespace RobotsTxt.Tests {
         }
     }
 
-    public class StartupAllowAll {
-        public void Configure(IApplicationBuilder app) {
+    public class StartupAllowAll
+    {
+        public void Configure(IApplicationBuilder app)
+        {
             app.UseRobotsTxt(builder => builder.AllowAll());
         }
     }
 
-    public class StartupDenyAll {
-        public void Configure(IApplicationBuilder app) {
+    public class StartupDenyAll
+    {
+        public void Configure(IApplicationBuilder app)
+        {
             app.UseRobotsTxt(builder => builder.DenyAll());
         }
     }
 
-    public class StartupNoConfig {
-        public void Configure(IApplicationBuilder app) {
+    public class StartupNoConfig
+    {
+        public void Configure(IApplicationBuilder app)
+        {
             app.UseRobotsTxt(builder => builder);
         }
     }
